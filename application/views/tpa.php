@@ -67,10 +67,10 @@
             </div>
             <div class="row">
               {petunjuk}
-        </div>
+          </div>
 
-        <div class="row">
-        <div class="col-md-9"> 
+          <div class="row">
+            <div class="col-md-9"> 
                 {soal}
             </div> 
             <div class="col-md-3">
@@ -80,7 +80,7 @@
                     </div>        
 
                     <div class="panel-body"> 
-                    {monitor}
+                        {monitor}
                     </div>
                 </div>
             </div>
@@ -105,38 +105,81 @@
 <script src="{base_url}assets/js/jquery-1.11.1.js"></script>
 <script src="{base_url}assets/js/bootstrap.js"></script>
 <script>
-        function next(no) { 
-          $("#soal"+no).hide(); 
-          $("#soal"+(parseInt(no)+1)).show();
-        }
-        function back(no) {
-          $("#soal"+no).hide();
-          $("#soal"+(parseInt(no)-1)).show();
-        } 
-        $(".next").click( function() {
-            var no = $(this).val();
-            next(no);
-        })
+    function next(no) { 
+      $("#soal"+no).hide(); 
+      $("#soal"+(parseInt(no)+1)).show();
+  }
+  function back(no) {
+      $("#soal"+no).hide();
+      $("#soal"+(parseInt(no)-1)).show();
+  } 
+  $(".next").click( function() {
+    var no = $(this).val();
+    next(no);
+})
 
-        $(".back").click( function() {
-            var no = $(this).val();
-            back(no); 
-        })
-        $(".A").click( function() { 
-            $(this).toggleClass(' pilih tdk_pilih'); 
-        })
-        $(".B").click( function() { 
-            $(this).toggleClass(' pilih tdk_pilih');  
-        })
-        $(".C").click( function() { 
-            $(this).toggleClass(' pilih tdk_pilih'); 
-        })
-        $(".D").click( function() { 
-            $(this).toggleClass(' pilih tdk_pilih'); 
-        })
-        $(".E").click( function() { 
-            $(this).toggleClass(' pilih tdk_pilih'); 
-        })
+  $(".back").click( function() {
+    var no = $(this).val();
+    back(no); 
+})
+  $(".jawaban").click( function() {
+    var x = $(this).val();
+    var c = $(this).attr('class');
+    var no = c.split(' ');
+    var nomor  = no[2].split('-');
+    jawab(nomor);
+})
+  function jawab(nomor) {
+    var btn = nomor[0]+"-"+nomor[1]; 
+    $("."+btn).toggleClass('pilih tdk_pilih'); 
+    update_monitor(nomor[0]); 
+    switch(nomor[1]) {
+        case "A": 
+        $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');
+        $("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');
+        $("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');
+        $("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
+        break;
+        case "B":
+
+        $("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih');
+        $("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');
+        $("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');
+        $("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
+        break;
+        case "C":
+
+        $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');
+        $("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih');
+        $("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');
+        $("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
+        break;
+        case "D":
+
+        $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');
+        $("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');
+        $("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih');
+        $("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
+        break;
+        case "E":
+
+        $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');
+        $("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');
+        $("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');
+        $("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"A").addClass('tdk_pilih'); 
+        break;
+    }
+} 
+
+function update_monitor(nomor) {  
+    if ($("."+nomor+"-A").hasClass('pilih') || $("."+nomor+"-B").hasClass('pilih') || $("."+nomor+"-C").hasClass('pilih') || $("."+nomor+"-D").hasClass('pilih') || $("."+nomor+"-E").hasClass('pilih')){
+        $(".M"+nomor).removeClass('btn-default');
+        $(".M"+nomor).addClass('btn-success');
+    }else{
+        $(".M"+nomor).removeClass('btn-success');
+        $(".M"+nomor).addClass('btn-default');
+    } 
+}
 </script>
 </body>
 </html>
