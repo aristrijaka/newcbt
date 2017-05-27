@@ -1,0 +1,10 @@
+Options +FollowSymLinks
+Options -Indexes
+DirectoryIndex index.php
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L,QSA] 
+RedirectMatch 404 ^/.*/\.(git|svn|hg|bzr)
+RewriteEngine On
+RewriteRule ^(.*/)?\.(git|svn|hg|bzr)+ - [R=404,L]
