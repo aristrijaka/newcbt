@@ -122,12 +122,17 @@
     var no = $(this).val();
     back(no); 
 })
-  $(".jawaban").click( function() {
-    var x = $(this).val();
+  $(".jawaban").click( function() { 
     var c = $(this).attr('class');
     var no = c.split(' ');
     var nomor  = no[2].split('-');
     jawab(nomor);
+})
+  $(".monitor").click( function() { 
+    var c = $(this).attr('class');
+    var no = c.split(' ');
+    var nomor  = no[2].split('-');
+    to_soal(nomor[1]);
 })
   function jawab(nomor) {
     var btn = nomor[0]+"-"+nomor[1]; 
@@ -166,18 +171,23 @@
         $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');
         $("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');
         $("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');
-        $("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"A").addClass('tdk_pilih'); 
+        $("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih'); 
         break;
     }
 } 
-
+function to_soal(nomer) {
+    for (i = 0; i < 50 ; i++) { 
+      $("#soal"+i).hide();
+  }
+  $("#soal"+nomer).show();
+}
 function update_monitor(nomor) {  
     if ($("."+nomor+"-A").hasClass('pilih') || $("."+nomor+"-B").hasClass('pilih') || $("."+nomor+"-C").hasClass('pilih') || $("."+nomor+"-D").hasClass('pilih') || $("."+nomor+"-E").hasClass('pilih')){
-        $(".M"+nomor).removeClass('btn-default');
-        $(".M"+nomor).addClass('btn-success');
+        $(".M-"+nomor).removeClass('btn-default');
+        $(".M-"+nomor).addClass('btn-success');
     }else{
-        $(".M"+nomor).removeClass('btn-success');
-        $(".M"+nomor).addClass('btn-default');
+        $(".M-"+nomor).removeClass('btn-success');
+        $(".M-"+nomor).addClass('btn-default');
     } 
 }
 </script>

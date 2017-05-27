@@ -56,7 +56,7 @@ class Welcome extends CI_Controller {
 	}
 	public function soal($value='')
 	{
-		$soalnya = ' <div id="soal1" style "display:" class="alert alert-warning">
+		$soalnya = '<div id="soal1" style "display:" class="alert alert-warning">
                         <img src="'.base_url().'assets/soalipa/1.png" class="img-rounded"  >  
                         <hr>
                         <div class="alert alert-default"> <h4>Pilih Jawaban</h4> 
@@ -68,22 +68,24 @@ class Welcome extends CI_Controller {
                         <hr> 
                          <button  class="next" value=1 style=" float: right;"  >Lanjut > </button> 
                     </div>
-                    </div>
-                    <div id="soal2" class="alert alert-warning " style="display:none;" >
-                        <img src="'.base_url().'assets/soalipa/2.png" class="img-rounded"  >  
+                    </div>';
+
+        for ($x = 2; $x <= 8; $x++) {
+			    $soalnya .= ' <div id="soal'.$x.'" style "display:" class="alert alert-warning">
+                        <img src="'.base_url().'assets/soalipa/'.$x.'.png" class="img-rounded"  >  
                         <hr>
-                        <div class="alert alert-default"> <h4>Pilih Jawaban</h4>
-                         <button class="btn tdk_pilih 2A" id=2A style="margin-right: 50px;" >A</button>
-                          <input class="btn tdk_pilih jawaban 2A" value="A" style=" width: 40px; " />
-                          <button class="btn tdk_pilih 2B" id=2B style="margin-right: 50px;" >B</button>
-                          <button class="btn tdk_pilih 2C" id=2C style="margin-right: 50px;" >C</button>
-                          <button class="btn tdk_pilih 2D" id=2D style="margin-right: 50px;" >D</button>
-                          <button class="btn tdk_pilih 2E" id=2E style="margin-right: 50px;" >E</button> 
-                        <hr>
-                         <button id="btnb" class="back"   value =2 style=" float: left; "  >< Kembali </button> 
-                         <button  id="btnn" class="next"  value =2 style=" float: right; " >Lanjut > </button> 
+                        <div class="alert alert-default"> <h4>Pilih Jawaban</h4> 
+                          <input class="btn jawaban '.$x.'-A tdk_pilih" value="A" style=" width: 40px; " />
+                          <input class="btn jawaban '.$x.'-B tdk_pilih" value="B" style=" width: 40px; " />
+                          <input class="btn jawaban '.$x.'-C tdk_pilih" value="C" style=" width: 40px; " />
+                          <input class="btn jawaban '.$x.'-D tdk_pilih" value="D" style=" width: 40px; " />
+                          <input class="btn jawaban '.$x.'-E tdk_pilih" value="E" style=" width: 40px; " /> 
+                        <hr> 
+                         <button  class="next" value='.$x.' style=" float: right;"  >Lanjut > </button> 
                     </div>
                     </div>';
+
+			} 
         return $soalnya;
 	}
 	public function menu($target='Dashboard')
@@ -138,7 +140,7 @@ class Welcome extends CI_Controller {
 	{
 		$out='';
 		for ($x = 1; $x <= 50; $x++) {
-        $out .=' <a href="#" class="btn btn-default M'.$x.'" style="width: 40px;">'.$x.'</a> ';
+        $out .='  <input class="btn monitor M-'.$x.' btn-default"  value="'.$x.'" style=" width: 40px; " /> ';
         } 
         return $out;
 	}
