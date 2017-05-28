@@ -56,37 +56,33 @@ class Welcome extends CI_Controller {
 	}
 	public function soal($value='')
 	{
-		$soalnya = '<div id="soal1" style "display:" class="alert alert-warning">
-                        <img src="'.base_url().'assets/soalipa/1.png" class="img-rounded"  >  
+		$ssl='';
+		$qry = out_where('soal',array('is_active' => 'Y'));
+		$no=1;
+		foreach($qry as $rw){
+			if ($no > 1){
+            	$btb ='<button  class="back" value='.$no.' style=" float: left;"  > < Kembali  </button>';
+            	$disp = 'none';
+            }else{
+            	$disp = '';
+            	$btb ='';
+            }
+			$ssl .= '<div id="soal'.$no.'" style "display: '.$disp.'" class="alert alert-warning">
+						<h3><strong>Soal no '.$no.'</strong></h4>
+                        <img src="'.base_url().'assets/soalipa/'.$rw->gambar.'" class="img-rounded"  >  
                         <hr>
                         <div class="alert alert-default"> <h4>Pilih Jawaban</h4> 
-                          <input class="btn jawaban 1-A tdk_pilih" value="A" style=" width: 40px; " />
-                          <input class="btn jawaban 1-B tdk_pilih" value="B" style=" width: 40px; " />
-                          <input class="btn jawaban 1-C tdk_pilih" value="C" style=" width: 40px; " />
-                          <input class="btn jawaban 1-D tdk_pilih" value="D" style=" width: 40px; " />
-                          <input class="btn jawaban 1-E tdk_pilih" value="E" style=" width: 40px; " /> 
-                        <hr> 
-                         <button  class="next" value=1 style=" float: right;"  >Lanjut > </button> 
+                          <input class="btn jawaban '.$no.'-A tdk_pilih" value="A" style=" width: 40px; " />
+                          <input class="btn jawaban '.$no.'-B tdk_pilih" value="B" style=" width: 40px; " />
+                          <input class="btn jawaban '.$no.'-C tdk_pilih" value="C" style=" width: 40px; " />
+                          <input class="btn jawaban '.$no.'-D tdk_pilih" value="D" style=" width: 40px; " />
+                          <input class="btn jawaban '.$no.'-E tdk_pilih" value="E" style=" width: 40px; " /> 
+                        <hr> '.$btb.'<button  class="next" value='.$no.' style=" float: right;"  >Lanjut > </button> 
                     </div>
                     </div>';
-
-        for ($x = 2; $x <= 8; $x++) {
-			    $soalnya .= ' <div id="soal'.$x.'" style "display:" class="alert alert-warning">
-                        <img src="'.base_url().'assets/soalipa/'.$x.'.png" class="img-rounded"  >  
-                        <hr>
-                        <div class="alert alert-default"> <h4>Pilih Jawaban</h4> 
-                          <input class="btn jawaban '.$x.'-A tdk_pilih" value="A" style=" width: 40px; " />
-                          <input class="btn jawaban '.$x.'-B tdk_pilih" value="B" style=" width: 40px; " />
-                          <input class="btn jawaban '.$x.'-C tdk_pilih" value="C" style=" width: 40px; " />
-                          <input class="btn jawaban '.$x.'-D tdk_pilih" value="D" style=" width: 40px; " />
-                          <input class="btn jawaban '.$x.'-E tdk_pilih" value="E" style=" width: 40px; " /> 
-                        <hr> 
-                         <button  class="next" value='.$x.' style=" float: right;"  >Lanjut > </button> 
-                    </div>
-                    </div>';
-
-			} 
-        return $soalnya;
+                    $no++; 
+		}  
+        return $ssl;
 	}
 	public function menu($target='Dashboard')
 	{

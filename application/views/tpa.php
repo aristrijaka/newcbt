@@ -68,7 +68,6 @@
             <div class="row">
               {petunjuk}
           </div>
-
           <div class="row">
             <div class="col-md-9"> 
                 {soal}
@@ -82,6 +81,9 @@
                     <div class="panel-body"> 
                         {monitor}
                     </div>
+<h3 style="text-align:center;" id="demo"></h3>
+<h3 style="text-align:center;" ><input class="btn simpan btn-success" value="Submit" /></h3>
+
                 </div>
             </div>
         </div>
@@ -105,7 +107,10 @@
 <script src="{base_url}assets/js/jquery-1.11.1.js"></script>
 <script src="{base_url}assets/js/bootstrap.js"></script>
 <script>
-    function next(no) { 
+$( document ).ready(function() {
+  to_soal(1);
+});
+function next(no) { 
       $("#soal"+no).hide(); 
       $("#soal"+(parseInt(no)+1)).show();
   }
@@ -140,38 +145,19 @@
     update_monitor(nomor[0]); 
     switch(nomor[1]) {
         case "A": 
-        $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');
-        $("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');
-        $("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');
-        $("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
+        $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');$("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');$("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');$("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
         break;
         case "B":
-
-        $("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih');
-        $("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');
-        $("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');
-        $("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
+        $("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih');$("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');$("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');$("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
         break;
         case "C":
-
-        $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');
-        $("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih');
-        $("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');
-        $("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
+        $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');$("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih');$("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');$("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
         break;
         case "D":
-
-        $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');
-        $("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');
-        $("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih');
-        $("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
+        $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');$("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');$("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih');$("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
         break;
         case "E":
-
-        $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');
-        $("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');
-        $("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');
-        $("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih'); 
+        $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');$("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');$("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');$("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih'); 
         break;
     }
 } 
@@ -190,6 +176,24 @@ function update_monitor(nomor) {
         $(".M-"+nomor).addClass('btn-default');
     } 
 }
+var ljk = { "a": 1, "b": 2, "c": 3 }; 
+</script>
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("Jan 5, 2018 15:37:25").getTime(); 
+var x = setInterval(function() { 
+  var now = new Date().getTime(); 
+  var distance = countDownDate - now;  
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000); 
+  document.getElementById("demo").innerHTML = hours + "Jam "
+  + minutes + "Menit " + seconds + "Detik"; 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
 </script>
 </body>
 </html>
