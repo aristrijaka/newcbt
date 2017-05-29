@@ -41,7 +41,7 @@ class konten extends CI_Model {
         </div>';
         $no++; 
       }  
-      $ssl .= '<input type="text" id="rekap" value ="'.$daftar.'X:\'X\'}">';
+      $ssl .= '<input type="hidden" id="rekap" value ="'.$daftar.'X:\'X\'}">';
       $initDate = new DateTime(); 
       $xx=$initDate->format('Y-m-d H:i:s');
       $initDate->add(new DateInterval('PT5400S')); 
@@ -190,5 +190,39 @@ class konten extends CI_Model {
     $sql = "select*from kelompok where is_active ='y' order by id";
     $kel = get_option(out_where($sql), array('val' => 'id', 'text' => 'kelompok'),0,true,'Pilih Kelompok');
     return $kel;
+  }
+  public function koreksi($idp='')
+  {
+    $qryx = out_row('hasil_test',array('id_mhs' => $idp,'id_ujian' => 1)); 
+    $jawaban = json_decode($qryx->jawaban); 
+    $lsoal = explode(",",$qryx->lsoal); 
+    $this->db->query('update hasil_test set benar = 0 , salah = 0 where id_mhs='.$idp); 
+    $sekor = 100 / count($lsoal);
+    foreach ($lsoal as $value) { 
+      $kunci = out_field('soal', array('id' => $value ),'kunci');
+      $key = 'S'.$value;
+      $jwb = $jawaban->$key;  
+      if($kunci==$jwb){
+       $this->db->query('update hasil_test set benar = (benar + 1) where id_mhs='.$idp);
+      }else{
+       $this->db->query('update hasil_test set salah = (salah + 1) where id_mhs='.$idp);
+      }
+    }
+    $this->db->query('update hasil_test set score = (benar * '.$sekor.') where id_mhs='.$idp);
+  }
+  public function get_time($idp='')
+  {
+    $initDate = new DateTime();
+    $cek=array('id_ujian'=>1,'id_mhs'=>$idp); 
+    $row = out_row('hasil_test', $cek);
+    $mula= new DateTime($row->mulai);
+    $akhir= new DateTime($row->akhir);
+    $now = new DateTime(); 
+    if ($now > $akhir){
+        redirect(base_url().'welcome/home', 'refresh');
+        return; 
+    } 
+    $diver = $akhir->getTimestamp() - $now->getTimestamp();
+    return $diver;
   }
 }

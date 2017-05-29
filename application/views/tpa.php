@@ -6,9 +6,12 @@
     <meta name="description" content="" />
     <meta name="author" content="" /> 
     <title>CBT Upgris</title> 
+    <script src="{base_url}assets/js/jquery.min.js"></script> 
+    <script src="{base_url}assets/js/jquery.time-to.js"></script>
     <link href="{base_url}assets/css/bootstrap.css" rel="stylesheet" /> 
     <link href="{base_url}assets/css/font-awesome.css" rel="stylesheet" /> 
-    <link href="{base_url}assets/css/style.css" rel="stylesheet" /> 
+    <link href="{base_url}assets/css/style.css" rel="stylesheet" />  
+    <link href="{base_url}assets/css/timeTo.css" type="text/css" rel="stylesheet"/>
     <style type="text/css">
         .soal_hide{
             display: none;
@@ -77,8 +80,17 @@
                     <div class="panel-heading">
                         LEMBAR MONITOR JAWABAN
                     </div>        
-                    <h3 style="text-align:center;" id="demo"></h3>
-                    <h3 style="text-align:center;" ><input class="btn simpan btn-success" value="Simpan" onclick="send_jwb();" /></h3>
+                    <div id="countdown-1" style="text-align: center;"></div> 
+                    <script> 
+                        $('#countdown-1').timeTo({timer}, function(){
+                           // alert('Waktu Habis');
+                            tempAlert("Waktu Telah Habis",5000);
+                           // setTimeout( window.location = '{base_url}Welcome/home', 5000);
+                            
+                        });
+                        
+                    </script>
+                    <h3 style="text-align:center;" ><input class="btn simpan btn-warning" value="Simpan" onclick="send_jwb();" /></h3>
                     <div class="panel-body"> 
                         {monitor}
                     </div>
@@ -111,9 +123,8 @@ var daftar = $("#rekap").val();
 eval('var obj='+daftar); 
     $( document ).ready(function() {
       to_soal(1);
-      for (i = 0; i < 150 ; i++) { 
-        update_monitor(i); 
-    }
+      for (i = 0; i < 100 ; i++) { update_monitor(i);} 
+      send_jwb();
   });
     function next(no) { 
       $("#soal"+no).hide(); 
@@ -208,23 +219,16 @@ function send_jwb(){
     },'json');
     return false;
 }
-</script>
-<script>
-// Set the date we're counting down to
-var countDownDate = new Date("Jan 5, 2018 15:37:25").getTime(); 
-var x = setInterval(function() { 
-  var now = new Date().getTime(); 
-  var distance = countDownDate - now;  
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000); 
-  document.getElementById("demo").innerHTML = hours + ":"
-  + minutes + ":" + seconds; 
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("demo").innerHTML = "EXPIRED";
+function tempAlert(msg,duration)
+{
+     var el = document.createElement("div");
+     el.setAttribute("style","position:absolute;top:40%;left:20%;background-color:white;");
+     el.innerHTML = msg;
+     setTimeout(function(){
+      el.parentNode.removeChild(el);
+     },duration);
+     document.body.appendChild(el);
 }
-}, 1000);
-</script>
+</script> 
 </body>
 </html>

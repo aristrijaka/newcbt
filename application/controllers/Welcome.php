@@ -44,7 +44,7 @@ class Welcome extends CI_Controller {
 			$data = array(
 				'blog_title' => 'My Blog Title',
 				'page_title' => 'Hasil Assement',
-				'tpa' => 80,
+				'tpa' => out_field('hasil_test', array('id_mhs' =>$peserta->id,'id_ujian'=>1),'score'),
 				'skala' => 60,
 				'menus'=> $this->konten->menu(),
 				'base_url' => base_url()
@@ -82,6 +82,7 @@ class Welcome extends CI_Controller {
 			'page_title' => 'TPA', 
 			'menus'=> $this->konten->menu('tpa'),
 			'soal' => $this->konten->soal($peserta->id),
+			'timer'=> $this->konten->get_time($peserta->id),
 			'base_url' => base_url(),
 			'monitor' => $this->konten->monitor($peserta->id),
 			'petunjuk' => $this->konten-> petunjuk()
@@ -149,6 +150,7 @@ class Welcome extends CI_Controller {
 				$this->db->update('hasil_test'); 
 				$out['valid'] = true;
 			} 
+			$this->konten->koreksi($peserta->id);
 			echo json_encode($out);
 		}
 	}

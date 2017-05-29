@@ -49,15 +49,15 @@
 
             </div>
             <div class="row">
-               <div class="col-md-6">
+             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Hasil Test 
                     </div>
 
                     <div class="panel-body">
-                      <p>Test Potensi Akademik</p>
-                       <div class="progress">
+                      <p>Test Potensi Akademik = {tpa} Point</p>
+                      <div class="progress">
                           <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {tpa}%"> 
                           </div>
                       </div>
@@ -68,8 +68,8 @@
 
                       </div> 
 
-        <a href="#" class="btn btn-primary">Cetak Hasil Test TPA</a>
-        <a href="#" class="btn btn-danger">Cetak Hasil Test Skala</a>
+                      <a href="#" class="btn btn-primary">Cetak Hasil Test TPA</a>
+                      <a href="#" class="btn btn-danger">Cetak Hasil Test Skala</a>
                   </div>
               </div>
           </div>
