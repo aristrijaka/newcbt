@@ -83,7 +83,7 @@ class Welcome extends CI_Controller {
 			'menus'=> $this->konten->menu('tpa'),
 			'soal' => $this->konten->soal($peserta->id),
 			'base_url' => base_url(),
-			'monitor' => $this->konten->monitor(),
+			'monitor' => $this->konten->monitor($peserta->id),
 			'petunjuk' => $this->konten-> petunjuk()
 			);
 		$this->parser->parse('tpa', $data); 

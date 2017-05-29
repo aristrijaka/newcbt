@@ -109,9 +109,11 @@
 //get listing id soal from daftar
 var daftar = $("#rekap").val();
 eval('var obj='+daftar); 
-
     $( document ).ready(function() {
       to_soal(1);
+      for (i = 0; i < 150 ; i++) { 
+        update_monitor(i); 
+    }
   });
     function next(no) { 
       $("#soal"+no).hide(); 
@@ -168,6 +170,7 @@ eval('var obj='+daftar);
         $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');$("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');$("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');$("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih'); 
         break;
     }
+    send_jwb()
 } 
 function to_soal(nomer) {
     for (i = 0; i < 50 ; i++) { 
@@ -185,15 +188,22 @@ function update_monitor(nomor) {
     } 
 } 
 function update_ljk(noljk,jwb) {  
-    obj[noljk]=jwb;
+
+    if (obj['S'+noljk]==jwb){
+        obj['S'+noljk]="X"; 
+    }else{
+        obj['S'+noljk]=jwb; 
+    }
+    
     //alert(JSON.stringify(obj));
 }
 function send_jwb(){    
+    $("#rekap").val(JSON.stringify(obj));
     $.post('{base_url}welcome/save_jwb',{'jawaban':JSON.stringify(obj)}, function(data){
         if(data.valid){
-            alert('save oke');
+           // alert('save oke');
         }else{
-            alert('Maaf slahkan login ulang');
+            alert('Maaf silahkan di ulang');
         }
     },'json');
     return false;
