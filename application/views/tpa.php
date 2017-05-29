@@ -77,12 +77,11 @@
                     <div class="panel-heading">
                         LEMBAR MONITOR JAWABAN
                     </div>        
-
+                    <h3 style="text-align:center;" id="demo"></h3>
+                    <h3 style="text-align:center;" ><input class="btn simpan btn-success" value="Simpan" onclick="send_jwb();" /></h3>
                     <div class="panel-body"> 
                         {monitor}
                     </div>
-<h3 style="text-align:center;" id="demo"></h3>
-<h3 style="text-align:center;" ><input class="btn simpan btn-success" value="Submit" /></h3>
 
                 </div>
             </div>
@@ -107,10 +106,14 @@
 <script src="{base_url}assets/js/jquery-1.11.1.js"></script>
 <script src="{base_url}assets/js/bootstrap.js"></script>
 <script>
-$( document ).ready(function() {
-  to_soal(1);
-});
-function next(no) { 
+//get listing id soal from daftar
+var daftar = $("#rekap").val();
+eval('var obj='+daftar); 
+
+    $( document ).ready(function() {
+      to_soal(1);
+  });
+    function next(no) { 
       $("#soal"+no).hide(); 
       $("#soal"+(parseInt(no)+1)).show();
   }
@@ -145,18 +148,23 @@ function next(no) {
     update_monitor(nomor[0]); 
     switch(nomor[1]) {
         case "A": 
+        update_ljk(nomor[0],"A");
         $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');$("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');$("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');$("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
         break;
         case "B":
+        update_ljk(nomor[0],"B");
         $("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih');$("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');$("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');$("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
         break;
         case "C":
+        update_ljk(nomor[0],"C");
         $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');$("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih');$("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');$("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
         break;
         case "D":
+        update_ljk(nomor[0],"D");
         $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');$("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');$("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih');$("."+nomor[0]+"-E").removeClass('pilih'); $("."+nomor[0]+"-E").addClass('tdk_pilih'); 
         break;
         case "E":
+        update_ljk(nomor[0],"E");
         $("."+nomor[0]+"-B").removeClass('pilih'); $("."+nomor[0]+"-B").addClass('tdk_pilih');$("."+nomor[0]+"-C").removeClass('pilih'); $("."+nomor[0]+"-C").addClass('tdk_pilih');$("."+nomor[0]+"-D").removeClass('pilih'); $("."+nomor[0]+"-D").addClass('tdk_pilih');$("."+nomor[0]+"-A").removeClass('pilih'); $("."+nomor[0]+"-A").addClass('tdk_pilih'); 
         break;
     }
@@ -175,8 +183,21 @@ function update_monitor(nomor) {
         $(".M-"+nomor).removeClass('btn-success');
         $(".M-"+nomor).addClass('btn-default');
     } 
+} 
+function update_ljk(noljk,jwb) {  
+    obj[noljk]=jwb;
+    //alert(JSON.stringify(obj));
 }
-var ljk = { "a": 1, "b": 2, "c": 3 }; 
+function send_jwb(){    
+    $.post('{base_url}welcome/save_jwb',{'jawaban':JSON.stringify(obj)}, function(data){
+        if(data.valid){
+            alert('save oke');
+        }else{
+            alert('Maaf slahkan login ulang');
+        }
+    },'json');
+    return false;
+}
 </script>
 <script>
 // Set the date we're counting down to
@@ -187,12 +208,12 @@ var x = setInterval(function() {
   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000); 
-  document.getElementById("demo").innerHTML = hours + "Jam "
-  + minutes + "Menit " + seconds + "Detik"; 
+  document.getElementById("demo").innerHTML = hours + ":"
+  + minutes + ":" + seconds; 
   if (distance < 0) {
     clearInterval(x);
     document.getElementById("demo").innerHTML = "EXPIRED";
-  }
+}
 }, 1000);
 </script>
 </body>

@@ -6,9 +6,9 @@
     <meta name="description" content="" />
     <meta name="author" content="" /> 
     <title>CBT Upgris</title> 
-    <link href="assets/css/bootstrap.css" rel="stylesheet" /> 
-    <link href="assets/css/font-awesome.css" rel="stylesheet" /> 
-    <link href="assets/css/style.css" rel="stylesheet" /> 
+    <link href="{base_url}assets/css/bootstrap.css" rel="stylesheet" /> 
+    <link href="{base_url}assets/css/font-awesome.css" rel="stylesheet" /> 
+    <link href="{base_url}assets/css/style.css" rel="stylesheet" /> 
 </head>
 <body>
     <!-- HEADER END-->
@@ -22,7 +22,7 @@
                 </button>
                 <a class="navbar-brand" href="index.html">
 
-                    <img src="assets/img/upgris.png" style="width: 60px;"/>
+                    <img src="{base_url}assets/img/upgris.png" style="width: 60px;"/>
                 </a>
 
             </div>
@@ -35,7 +35,7 @@
                             <div class="dropdown-menu dropdown-settings">
                                 <div class="media">
                                     <a class="media-left" href="#">
-                                        <img src="assets/img/64-64.jpg" alt="" class="img-rounded" />
+                                        <img src="{base_url}assets/img/64-64.jpg" alt="" class="img-rounded" />
                                     </a>
                                     <div class="media-body">
                                         <h4 class="media-heading">Jhon Deo Alex </h4>
@@ -47,7 +47,7 @@
                                 <h5><strong>Personal Bio : </strong></h5>
                                 Anim pariatur cliche reprehen derit.
                                 <hr />
-                                <a href="#" class="btn btn-info btn-sm">Full Profile</a>&nbsp; <a href="login.html" class="btn btn-danger btn-sm">Logout</a>
+                                <a href="#" class="btn btn-info btn-sm">Full Profile</a>&nbsp; <a href="{base_url}welcome/eko_logout" class="btn btn-danger btn-sm">Logout</a>
 
                             </div>
                         </li>
@@ -65,7 +65,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h4 class="page-head-line">Dashboard</h4>
+                    <h4 class="page-head-line">{blog_heading}</h4>
 
                 </div>
 
@@ -79,17 +79,19 @@
 
             </div>
             <div class="row">
+             <a href="{base_url}welcome/biodata"> 
              <div class="col-md-3 col-sm-3 col-xs-6">
                 <div class="dashboard-div-wrapper bk-clr-one">
                     <i  class="fa fa-venus dashboard-div-icon" ></i>
                     <div class="progress progress-striped active">
                       <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
                       </div>
-
                   </div>
                   <h5>Biodata </h5>
               </div>
           </div>
+          </a>
+           <a href="{base_url}welcome/tpa"> 
           <div class="col-md-3 col-sm-3 col-xs-6">
             <div class="dashboard-div-wrapper bk-clr-two">
                 <i  class="fa fa-edit dashboard-div-icon" ></i>
@@ -101,6 +103,8 @@
               <h5>Tes Potensi Akademik</h5>
           </div>
       </div>
+      </a>
+       <a href="{base_url}welcome/skala"> 
       <div class="col-md-3 col-sm-3 col-xs-6">
         <div class="dashboard-div-wrapper bk-clr-three">
             <i  class="fa fa-cogs dashboard-div-icon" ></i>
@@ -112,6 +116,8 @@
           <h5>Tes Skala Kepibadian </h5>
       </div>
   </div>
+  </a>
+  <a href="{base_url}welcome/hasil"> 
   <div class="col-md-3 col-sm-3 col-xs-6">
     <div class="dashboard-div-wrapper bk-clr-four">
         <i  class="fa fa-bell-o dashboard-div-icon" ></i>
@@ -123,7 +129,7 @@
       <h5>Cetak Hasil Test </h5>
   </div>
 </div>
-
+</a>
 </div>
 
 </div>
@@ -137,7 +143,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                &copy; 2015 YourCompany | By : <a href="http://www.designbootstrap.com/" target="_blank">DesignBootstrap</a>
+                &copy; 2017 | By : BPTIK-UPGRIS
             </div>
 
         </div>
@@ -146,8 +152,8 @@
 <!-- FOOTER SECTION END-->
 <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
 <!-- CORE JQUERY SCRIPTS -->
-<script src="assets/js/jquery-1.11.1.js"></script>
+<script src="{base_url}assets/js/jquery-1.11.1.js"></script>
 <!-- BOOTSTRAP SCRIPTS  -->
-<script src="assets/js/bootstrap.js"></script>
+<script src="{base_url}assets/js/bootstrap.js"></script>
 </body>
 </html>

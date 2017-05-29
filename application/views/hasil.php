@@ -29,7 +29,7 @@
         </div>
     </div>
     <!-- LOGO HEADER END-->
-{menus}
+    {menus}
     <!-- MENU SECTION END-->
     <div class="content-wrapper">
         <div class="container">
@@ -48,31 +48,33 @@
                 </div>
 
             </div>
-<div class="row">
-    <div class="col-md-8">
-        <div class="alert alert-warning">
-            Ini Data Diri Saudara
-            <br />
-            <a href="#" target="_blank">Untuk Pendaftaran Mahasiswa Baru Universitas PGRI Semarang</a>
-            <br />
-            <span class="glyphicon glyphicon-align-left text-success" ></span> Nama <span class="label label-info" > {nama} </span><br>
-            <span class="glyphicon glyphicon-align-left text-success" ></span> No Ujian <span class="label label-info" > {no_ujian} </span><br>
-            <span class="glyphicon glyphicon-align-left text-success" ></span> Tanggal Lahir  <span class="label label-info" > {tgl_lahir} </span> <br>
-            <span class="glyphicon glyphicon-align-left text-success" ></span> Jenis Kelamin <span class="label label-info" > {jkel} </span> <br>
-            <span class="glyphicon glyphicon-align-left text-success" ></span> Piliahan 1 <span class="label label-info" > {prodi1} </span> <br>
-            <span class="glyphicon glyphicon-align-left text-success" ></span> Pilihan 2 <span class="label label-info" > {prodi2} </span> <br> 
-            <br />
-            Icon Display : 
-            <br />
-            <span style="font-size: 50px;" class="glyphicon glyphicon-user"></span>
-            <br />
-            Css Class :<i> glyphicon glyphicon-user </i> 
-            
-            <br />
-        </div>
-    </div> 
-</div>
-</div>
+            <div class="row">
+               <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Hasil Test 
+                    </div>
+
+                    <div class="panel-body">
+                      <p>Test Potensi Akademik</p>
+                       <div class="progress">
+                          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {tpa}%"> 
+                          </div>
+                      </div>
+                      <p>Test Skala Kepribadian</p>
+                      <div class="progress">
+                          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: {skala}%"> 
+                          </div>
+
+                      </div> 
+
+        <a href="#" class="btn btn-primary">Cetak Hasil Test TPA</a>
+        <a href="#" class="btn btn-danger">Cetak Hasil Test Skala</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </div> 
 </div> 
 </div>
