@@ -9,8 +9,20 @@ class konten extends CI_Model {
   {
     $qryx = out_row('hasil_test',array('id_mhs' => $idp,'id_ujian' => 1)); 
     if (count($qryx) < 1) { 
-      $ssl=''; $daftar='{';$lsoal=array();
-      $qry = out_where('soal',array('is_active' => 'Y'));
+      $ssl='<div class="row"><div class="col-md-9"> '; $daftar='{';$lsoal=array();$monit='';
+      $mhs = $this->peserta->get_memberdata(); 
+      if ($mhs->id_jurusan=='1'){
+        $jur =  'IPA';
+        $max = 50;
+      }else if ($mhs->id_jurusan=='2'){
+        $jur =  'IPS';
+        $max = 60;
+      }else{
+        $jur = 'IPC';
+        $max = 50;
+      }
+        //$qry = out_where('select * from soal where is_active = "Y" and kategori ='.$mhs->id_jurusan.' order by rand() limit 50');
+      $qry = out_where('select * from soal where is_active = "Y" and kategori ='.$mhs->id_jurusan.' order by id limit '.$max );
       $no=1;
       foreach($qry as $rw)
       { 
@@ -18,30 +30,41 @@ class konten extends CI_Model {
         $daftar .='S'.$rw->id.':\'X\',';
         if ($no > 1)
         {
-          $btb ='<button  class="back" value='.$no.' style=" float: left;"  > < Kembali  </button>';
+          $btb ='<button  class="back" value='.$rw->id.' style=" float: left;"  > < Kembali  </button>';
           $disp = 'none';
         }else
         {
           $disp = '';
           $btb ='';
         }
-        $ssl .= '<div id="soal'.$no.'" style "display: '.$disp.'" class="alert alert-warning">
-        <h3><strong>Soal no '.$no.'</strong></h4>
+        $ssl .= '<div id="soal'.$rw->id.'" style ="display: '.$disp.';" class="alert alert-warning">
+        <h3><strong>Soal '. $jur.' no '.$no.'</strong></h4>
           <input type="hidden" id="soal_'.$rw->id.'" value ="'.$rw->id.'">
-          <img src="'.base_url().'assets/soalipa/'.$rw->gambar.'" class="img-rounded"  >  
+          <img src="'.base_url().'assets/soal/'.$jur.'/'.$rw->gambar.'" class="img-rounded"  >  
           <hr>
           <div class="alert alert-default"> <h4>Pilih Jawaban</h4> 
-            <input class="btn jawaban '.$no.'-A tdk_pilih" value="A" style=" width: 40px; " />
-            <input class="btn jawaban '.$no.'-B tdk_pilih" value="B" style=" width: 40px; " />
-            <input class="btn jawaban '.$no.'-C tdk_pilih" value="C" style=" width: 40px; " />
-            <input class="btn jawaban '.$no.'-D tdk_pilih" value="D" style=" width: 40px; " />
-            <input class="btn jawaban '.$no.'-E tdk_pilih" value="E" style=" width: 40px; " /> 
-            <hr> '.$btb.'<button  class="next" value='.$no.' style=" float: right;"  >Lanjut > </button> 
+            <input class="btn jawaban '.$rw->id.'-A tdk_pilih" value="A" style=" width: 40px; " />
+            <input class="btn jawaban '.$rw->id.'-B tdk_pilih" value="B" style=" width: 40px; " />
+            <input class="btn jawaban '.$rw->id.'-C tdk_pilih" value="C" style=" width: 40px; " />
+            <input class="btn jawaban '.$rw->id.'-D tdk_pilih" value="D" style=" width: 40px; " />
+            <input class="btn jawaban '.$rw->id.'-E tdk_pilih" value="E" style=" width: 40px; " /> 
+            <hr> '.$btb.'<button  class="next" value='.$rw->id.' style=" float: right;"  >Lanjut > </button> 
           </div>
         </div>';
+        $monit .='  <input class="btn monitor M-'.$rw->id.' btn-default"  value="'.$no.'" style=" width: 40px; " /> ';
         $no++; 
       }  
       $ssl .= '<input type="hidden" id="rekap" value ="'.$daftar.'X:\'X\'}">';
+      $ssl .='            </div> 
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        LEMBAR MONITOR JAWABAN
+                    </div>         
+                    <h3 style="text-align:center;" ><input class="btn simpan btn-warning" value="Selesai" onclick="send_jwb_last();" /></h3>
+                    <div class="panel-body"> ';
+      $ssl .= $monit;
+      $ssl .='</div></div></div></div>';
       $initDate = new DateTime(); 
       $xx=$initDate->format('Y-m-d H:i:s');
       $initDate->add(new DateInterval('PT5400S')); 
@@ -53,13 +76,20 @@ class konten extends CI_Model {
         'akhir'=>$yy,
         'lsoal'=>implode(",",$lsoal)
         ); 
-
       $this->db->insert('hasil_test', $array); 
       return $ssl;
     }
     else{  
-      $ssl=''; $daftar='{';
+      $ssl='<div class="row"><div class="col-md-9"> '; $daftar='{';$monit='';
       $qry = out_where('select * from soal where id in('.$qryx->lsoal.')');
+      $mhs = $this->peserta->get_memberdata(); 
+      if ($mhs->id_jurusan=='1'){
+        $jur =  'IPA';
+      }else if ($mhs->id_jurusan=='2'){
+        $jur =  'IPS';
+      }else{
+        $jur = 'IPC';
+      }
       $no=1;
       foreach($qry as $rw)
       {     
@@ -89,30 +119,43 @@ class konten extends CI_Model {
         $daftar .='S'.$rw->id.':\'X\',';
         if ($no > 1)
         {
-          $btb ='<button  class="back" value='.$no.' style=" float: left;"  > < Kembali  </button>';
+          $btb ='<button  class="back" value='.$rw->id.' style=" float: left;"  > < Kembali  </button>';
           $disp = 'none';
         }else
         {
           $disp = '';
           $btb ='';
         }
-        $ssl .= '<div id="soal'.$no.'" style "display: '.$disp.'" class="alert alert-warning">
+        $ssl .= '<div id="soal'.$rw->id.'" style ="display: '.$disp.';" class="alert alert-warning">
         <h3><strong>Soal no '.$no.'</strong></h4>
           <input type="hidden" id="soal_'.$rw->id.'" value ="'.$rw->id.'">
-          <img src="'.base_url().'assets/soalipa/'.$rw->gambar.'" class="img-rounded"  >  
+          <img src="'.base_url().'assets/soal/'.$jur.'/'.$rw->gambar.'" class="img-rounded"  >  
           <hr>
           <div class="alert alert-default"> <h4>Pilih Jawaban</h4> 
-            <input class="btn jawaban '.$no.'-A '.$class_a.'" value="A" style=" width: 40px; " />
-            <input class="btn jawaban '.$no.'-B '.$class_b.'" value="B" style=" width: 40px; " />
-            <input class="btn jawaban '.$no.'-C '.$class_c.'" value="C" style=" width: 40px; " />
-            <input class="btn jawaban '.$no.'-D '.$class_d.'" value="D" style=" width: 40px; " />
-            <input class="btn jawaban '.$no.'-E '.$class_e.'" value="E" style=" width: 40px; " /> 
-            <hr> '.$btb.'<button  class="next" value='.$no.' style=" float: right;"  >Lanjut > </button> 
+            <input class="btn jawaban '.$rw->id.'-A '.$class_a.'" value="A" style=" width: 40px; " />
+            <input class="btn jawaban '.$rw->id.'-B '.$class_b.'" value="B" style=" width: 40px; " />
+            <input class="btn jawaban '.$rw->id.'-C '.$class_c.'" value="C" style=" width: 40px; " />
+            <input class="btn jawaban '.$rw->id.'-D '.$class_d.'" value="D" style=" width: 40px; " />
+            <input class="btn jawaban '.$rw->id.'-E '.$class_e.'" value="E" style=" width: 40px; " /> 
+            <hr> '.$btb.'<button  class="next" value='.$rw->id.' style=" float: right;"  >Lanjut > </button> 
           </div>
         </div>';
+        $monit .='  <input class="btn monitor M-'.$rw->id.' btn-default"  value="'.$no.'" style=" width: 40px; " /> ';
         $no++; 
       }   
+     // $ssl .= '<input type="hidden" id="rekap" value ="'.$daftar.'X:\'X\'}">';
+      $ssl .='            </div> 
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        LEMBAR MONITOR JAWABAN
+                    </div>         
+                    <h3 style="text-align:center;" ><input class="btn simpan btn-warning" value="Selesai" onclick="send_jwb_last();" /></h3>
+                    <div class="panel-body"> ';
+      $ssl .= $monit;
+      $ssl .='</div></div></div></div>';
       $ssl .= "<input type='hidden' id='rekap' value ='".$qryx->jawaban."'>"; 
+
       return $ssl;
     }
   }
@@ -161,15 +204,7 @@ class konten extends CI_Model {
     </div>
     </section>';
     return $out;
-  }
-  public function monitor($idp='')
-  {
-    $out='';
-      for ($x = 1; $x <= 50; $x++) {
-        $out .='  <input class="btn monitor M-'.$x.' btn-default"  value="'.$x.'" style=" width: 40px; " /> ';
-      } 
-      return $out;
-  }   
+  } 
   public function petunjuk($value='')
   {
     $out=' <p><strong></strong></p>
@@ -196,19 +231,30 @@ class konten extends CI_Model {
     $qryx = out_row('hasil_test',array('id_mhs' => $idp,'id_ujian' => 1)); 
     $jawaban = json_decode($qryx->jawaban); 
     $lsoal = explode(",",$qryx->lsoal); 
-    $this->db->query('update hasil_test set benar = 0 , salah = 0 where id_mhs='.$idp); 
+    $this->db->query('update hasil_test set benar = 0 , salah = 0 ,terjawab = 0 where id_ujian=1 and  id_mhs='.$idp); 
     $sekor = 100 / count($lsoal);
     foreach ($lsoal as $value) { 
       $kunci = out_field('soal', array('id' => $value ),'kunci');
       $key = 'S'.$value;
-      $jwb = $jawaban->$key;  
+      $jwb = $jawaban->$key; 
+      if ($jwb != 'X'){ 
+        $this->db->query('update hasil_test set terjawab = (terjawab + 1) where id_ujian = 1 and id_mhs='.$idp);
+      } 
       if($kunci==$jwb){
-       $this->db->query('update hasil_test set benar = (benar + 1) where id_mhs='.$idp);
+       $this->db->query('update hasil_test set benar = (benar + 1) where id_ujian= 1 and id_mhs='.$idp);
       }else{
-       $this->db->query('update hasil_test set salah = (salah + 1) where id_mhs='.$idp);
+       $this->db->query('update hasil_test set salah = (salah + 1) where id_ujian= 1 and id_mhs='.$idp);
       }
     }
-    $this->db->query('update hasil_test set score = (benar * '.$sekor.') where id_mhs='.$idp);
+    $mhs = $this->peserta->get_memberdata();
+    if ($mhs->id_prodi1 == 19){
+      $this->db->query('update hasil_test set score = (benar * '.$sekor.') where id_ujian=1 and id_mhs='.$idp);
+    }else{
+      $this->db->query('update hasil_test set score = (benar * '.$sekor.') where id_ujian=1 and id_mhs='.$idp);
+      $this->db->query('update hasil_test set score = ((benar * '.$sekor.')+30) where terjawab>15 and id_ujian=1 and id_mhs='.$idp);
+      $this->db->query('update hasil_test set score = 100 where score > 100 and id_ujian=1 and id_mhs='.$idp);
+    }
+    
   }
   public function get_time($idp='')
   {
@@ -225,4 +271,90 @@ class konten extends CI_Model {
     $diver = $akhir->getTimestamp() - $now->getTimestamp();
     return $diver;
   }
+  function cetak_lap_ujian(){  
+        $array = array();  
+        $id = 1;
+        $member = $this->peserta->get_memberdata(); 
+        $row = out_row("select*from hasil_test where id_mhs = '".$member->id."' and id_ujian = 1 and is_active='Y' ");
+
+        if(!isset($member->id)){
+            redirect(base_url());
+            return false;
+        }
+        if(count($row) < 1 or $id < 1){
+            redirect(base_url());
+            return false;
+        }
+        $lulus='LULUS';
+        if($row->score<50){
+            $lulus='';
+        }
+        $score=$row->score;
+        $modal=out_field('modal', array('id_jurusan' => $member->id_prodi1,'is_active'=>'Y'),'modal'); 
+        if ($modal>0){
+            $score=$score+$modal;
+        }
+        if ($score >100){
+            $score = 100;
+        } 
+        if ($score>=50){
+          $stts='Diterima';
+        }else{
+          $stts='Pending';
+        }
+        $ket_lulus='Diterima';
+        if (($member->id_prodi1 == 23 ) or ($member->id_prodi2 == 23 )){
+            $ket_lulus ="Status ".$stts." dan menunggu hasil tes Kesehatan dan Ketrampilan ";
+        }else{
+            $ket_lulus = "Status ".$stts." Selanjutnya menunggu hasil tes Wawancara";
+        }
+        $kelompok = out_field('kelompok', array('id' => $member->id_jurusan),'kelompok');
+        
+        $array = array(
+            array('posx' => 90, 'posy' => 60, 'size' => 13, 'val' => 'HASIL UJIAN:', 'style' => 'B'),
+            array('posx' => 65, 'posy' => 70, 'size' => 14, 'val' => 'COMPUTER ASSESSMENT TES', 'style' => 'B'),
+            array('posx' => 40, 'posy' => 85, 'size' => 12, 'val' => 'No Ujian'),
+            array('posx' => 60, 'posy' => 85, 'size' => 12, 'val' => ': '.$member->no_ujian),
+            array('posx' => 40, 'posy' => 95, 'size' => 12, 'val' => 'Nama'),
+            array('posx' => 60, 'posy' => 95, 'size' => 12, 'val' => ': '.$member->nama),
+            array('posx' => 40, 'posy' => 105, 'size' => 12, 'val' => 'J.Kelamin'),
+            array('posx' => 60, 'posy' => 105, 'size' => 12, 'val' => ': '.$member->jkel),
+            array('posx' => 40, 'posy' => 115, 'size' => 12, 'val' => 'Jurusan'),
+            array('posx' => 60, 'posy' => 115, 'size' => 12, 'val' => ': '.$kelompok),
+            array('posx' => 38, 'posy' => 152, 'size' => 12, 'val' => toDmy($row->mulai)),
+            array('posx' => 82, 'posy' => 152, 'size' => 12, 'val' => toDmy($row->akhir)),
+            array('posx' => 132, 'posy' => 152, 'size' => 13, 'val' => $score, 'style' => 'B'),
+            array('posx' => 164, 'posy' => 152, 'size' => 13, 'val' => '*)', 'style' => 'B'),
+            array('posx' => 132, 'posy' => 200, 'size' => 12, 'val' => 'Semarang,          2017'),
+            array('posx' => 132, 'posy' => 208, 'size' => 12, 'val' => 'Pengawas Ujian'),
+            array('posx' => 132, 'posy' => 235, 'size' => 12, 'val' => '(............................................)'),
+            array('posx' => 132, 'posy' => 245, 'size' => 12, 'val' => 'NPP: ..................................'), 
+
+            array('posx' => 40, 'posy' => 170, 'size' => 12, 'val' => '*)'.$ket_lulus), 
+            
+        );
+
+        $this->load->library('fpdi');
+        $file = 'assets/pdf_tpl/surat_pgri.pdf';
+        if(!file_exists($file)){
+            return;
+        }
+        $pagecount = $this->fpdi->setSourceFile($file);
+        $tplidx = $this->fpdi->importPage(1, '/MediaBox');
+        $size = $this->fpdi->getTemplateSize($tplidx);
+        $this->fpdi->addPage();
+        $this->fpdi->useTemplate($tplidx, null, null, $size['w'], $size['h'], true);
+        
+        
+        foreach($array as $key=>$item){
+            if(!isset($arr[$key])){$arr[$key] = '';}
+            $st = '';
+            if(isset($item['style'])){$st = $item['style'];}
+            $this->fpdi->SetFont('Arial', $st, $item['size']);
+            $this->fpdi->SetXY(0, 0);
+            $this->fpdi->Text($item['posx'], $item['posy'], $item['val'].$arr[$key]);
+        }
+        //exit('kene');
+        $this->fpdi->Output('Hasil Ujian Cat '.$member->no_ujian.'.pdf', 'D');
+    }
 }

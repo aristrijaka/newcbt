@@ -71,33 +71,14 @@
             <div class="row">
               {petunjuk}
           </div>
-          <div class="row">
-            <div class="col-md-9"> 
-                {soal}
-            </div> 
-            <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        LEMBAR MONITOR JAWABAN
-                    </div>        
-                    <div id="countdown-1" style="text-align: center;"></div> 
+          <div id="countdown-1" style="text-align: center;"></div> 
                     <script> 
-                        $('#countdown-1').timeTo({timer}, function(){
-                           // alert('Waktu Habis');
-                            tempAlert("Waktu Telah Habis",5000);
-                           // setTimeout( window.location = '{base_url}Welcome/home', 5000);
-                            
+                        $('#countdown-1').timeTo({timer}, function(){ 
+                           setTimeout( window.location = '{base_url}Welcome/home', 5000);
                         });
                         
                     </script>
-                    <h3 style="text-align:center;" ><input class="btn simpan btn-warning" value="Simpan" onclick="send_jwb();" /></h3>
-                    <div class="panel-body"> 
-                        {monitor}
-                    </div>
-
-                </div>
-            </div>
-        </div>
+   {soal}
     </div>
 </div> 
 </div> 
@@ -122,8 +103,8 @@
 var daftar = $("#rekap").val();
 eval('var obj='+daftar); 
     $( document ).ready(function() {
-      to_soal(1);
-      for (i = 0; i < 100 ; i++) { update_monitor(i);} 
+      //to_soal(1);
+      for (i = 0; i < 1000 ; i++) { update_monitor(i);} 
       send_jwb();
   });
     function next(no) { 
@@ -184,7 +165,8 @@ eval('var obj='+daftar);
     send_jwb()
 } 
 function to_soal(nomer) {
-    for (i = 0; i < 50 ; i++) { 
+    console.log(nomer);
+    for (i = 0; i < 6100 ; i++) { 
       $("#soal"+i).hide();
   }
   $("#soal"+nomer).show();
@@ -219,16 +201,24 @@ function send_jwb(){
     },'json');
     return false;
 }
-function tempAlert(msg,duration)
-{
-     var el = document.createElement("div");
-     el.setAttribute("style","position:absolute;top:40%;left:20%;background-color:white;");
-     el.innerHTML = msg;
-     setTimeout(function(){
-      el.parentNode.removeChild(el);
-     },duration);
-     document.body.appendChild(el);
-}
-</script> 
+function send_jwb_last(){    
+    $("#rekap").val(JSON.stringify(obj));
+    var r = confirm("Apakah Anda Yakin Mengakhiri Ujian ??");
+    if (r == true) {
+         $.post('{base_url}welcome/save_jwb_last',{'jawaban':JSON.stringify(obj)}, function(data){
+        if(data.valid){
+            alert('Hasil Telah Disimpan');
+            document.location='{base_url}welcome/home'; 
+        }else{
+            alert('Maaf silahkan di ulang');
+        }
+        },'json');
+        return false;
+    } else {
+        return;
+    }
+} 
+
+</script>  
 </body>
 </html>

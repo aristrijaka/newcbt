@@ -68,7 +68,7 @@
 
                       </div> 
 
-                      <a href="#" class="btn btn-primary">Cetak Hasil Test TPA</a>
+                      <a href="{base_url}welcome/cetak_hasil_tpa" class="btn btn-primary">Cetak Hasil Test TPA</a>
                       <a href="#" class="btn btn-danger">Cetak Hasil Test Skala</a>
                   </div>
               </div>

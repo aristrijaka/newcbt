@@ -84,7 +84,7 @@ class Welcome extends CI_Controller {
 			'soal' => $this->konten->soal($peserta->id),
 			'timer'=> $this->konten->get_time($peserta->id),
 			'base_url' => base_url(),
-			'monitor' => $this->konten->monitor($peserta->id),
+		//	'monitor' => $this->konten->monitor($peserta->id),
 			'petunjuk' => $this->konten-> petunjuk()
 			);
 		$this->parser->parse('tpa', $data); 
@@ -154,4 +154,30 @@ class Welcome extends CI_Controller {
 			echo json_encode($out);
 		}
 	}
+	public function save_jwb_last()
+	{
+		$out = array('valid' => false);
+		if(!$this->peserta->is_login()){
+			$out->valid = false;
+		}else{
+			$initDate = new DateTime(); 
+      		$xx=$initDate->format('Y-m-d H:i:s');
+			$peserta = $this->peserta->get_memberdata(); 
+			$row = out_row('hasil_test', array('id_mhs' => $peserta->id));
+			if (count($row) > 0) { 
+				$this->db->set('jawaban', $this->input->post('jawaban'));
+				$this->db->set('akhir', $xx);
+				$this->db->where('id_mhs', $peserta->id);
+				$this->db->update('hasil_test'); 
+				$out['valid'] = true;
+			} 
+			$this->konten->koreksi($peserta->id);
+			echo json_encode($out);
+		}
+	}
+	public function cetak_hasil_tpa()
+	{
+		$this->konten->cetak_lap_ujian();
+	}
+	
 }

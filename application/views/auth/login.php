@@ -9,7 +9,7 @@
     <style type="text/css">
 
         .login2background{    
-            /*background-image: url(https://s13.postimg.org/8xs7irifb/education2.png);*/
+            background-image: url(bg1.jpg);
             background-repeat:no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -18,7 +18,7 @@
             background: white;
             color: black;    
             margin-top: 30%;
-            left: 0;
+            left: -100px;
             padding: 20px;   
             box-shadow: 0 8px 50px -2px #000;
             border-radius:5px;
