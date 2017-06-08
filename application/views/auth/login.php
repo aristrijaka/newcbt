@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
-    <title>login with fullscreen background - Sample  - Bootsnipp.com</title>
+    <title>CBT UPGRIS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="{base_url}assets/css/bootstrap.min.css" rel="stylesheet"> 
     <style type="text/css">
 
         .login2background{    
@@ -65,8 +65,8 @@
 
         }
     </style>
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="{base_url}assets/js/jquery.min.js"></script>
+    <script src="{base_url}assets/js/bootstrap.min.js"></script>
 </head> 
 <?php
 $cal_d = get_opt_calendar(14, 30); 

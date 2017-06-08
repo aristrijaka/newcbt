@@ -99,13 +99,14 @@
 <script src="{base_url}assets/js/jquery-1.11.1.js"></script>
 <script src="{base_url}assets/js/bootstrap.js"></script>
 <script>
+//$(window).bind('beforeunload', function(){
+//  return 'Apakah Anda Yakin Keluar dan selesai ujian ?';
+//});
 //get listing id soal from daftar
+
 var daftar = $("#rekap").val();
 eval('var obj='+daftar); 
     $( document ).ready(function() {
-        setTimeout(function() {
-        $("#petunjuk").hide();
-        }, 10000);
       //to_soal(1);
       for (i = 0; i < 1000 ; i++) { update_monitor(i);} 
       send_jwb();
@@ -195,9 +196,9 @@ function update_ljk(noljk,jwb) {
 }
 function send_jwb(){    
     $("#rekap").val(JSON.stringify(obj));
-    $.post('{base_url}welcome/save_jwb',{'jawaban':JSON.stringify(obj)}, function(data){
+    $.post('{base_url}welcome/save_jwb_skala',{'jawaban':JSON.stringify(obj)}, function(data){
         if(data.valid){
-           // alert('save oke');
+           // alert('save skala oke');
         }else{
             alert('Maaf silahkan di ulang');
         }
@@ -208,7 +209,7 @@ function send_jwb_last(){
     $("#rekap").val(JSON.stringify(obj));
     var r = confirm("Apakah Anda Yakin Mengakhiri Ujian ??");
     if (r == true) {
-         $.post('{base_url}welcome/save_jwb_last',{'jawaban':JSON.stringify(obj)}, function(data){
+         $.post('{base_url}welcome/save_jwb_last_skala',{'jawaban':JSON.stringify(obj)}, function(data){
         if(data.valid){
             alert('Hasil Telah Disimpan');
             document.location='{base_url}welcome/home'; 

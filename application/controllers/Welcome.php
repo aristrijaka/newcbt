@@ -45,7 +45,7 @@ class Welcome extends CI_Controller {
 				'blog_title' => 'My Blog Title',
 				'page_title' => 'Hasil Assement',
 				'tpa' => out_field('hasil_test', array('id_mhs' =>$peserta->id,'id_ujian'=>1),'score'),
-				'skala' => 60,
+				'skala' => out_field('hasil_test', array('id_mhs' =>$peserta->id,'id_ujian'=>2),'score') * (100/80),
 				'menus'=> $this->konten->menu(),
 				'base_url' => base_url()
 				);
@@ -88,6 +88,23 @@ class Welcome extends CI_Controller {
 			'petunjuk' => $this->konten-> petunjuk()
 			);
 		$this->parser->parse('tpa', $data); 
+		}
+	}
+	public function skala()
+	{
+		if(!$this->peserta->is_login()){
+			redirect('welcome', 'refresh');
+		}else{
+		$peserta = $this->peserta->get_memberdata(); 
+		$data = array(
+			'page_title' => 'TPA', 
+			'menus'=> $this->konten->menu('scala'),
+			'soal' => $this->konten->soal_scala($peserta->id),
+			'timer'=> $this->konten->get_time_skala($peserta->id),
+			'petunjuk'=>'',
+			'base_url' => base_url()
+			);
+		$this->parser->parse('skala', $data); 
 		}
 	}
 	function eko_login() { 
@@ -143,10 +160,11 @@ class Welcome extends CI_Controller {
 			$out->valid = false;
 		}else{
 			$peserta = $this->peserta->get_memberdata(); 
-			$row = out_row('hasil_test', array('id_mhs' => $peserta->id));
+			$row = out_row('hasil_test', array('id_mhs' => $peserta->id,'id_ujian'=>1));
 			if (count($row) > 0) { 
 				$this->db->set('jawaban', $this->input->post('jawaban'));
 				$this->db->where('id_mhs', $peserta->id);
+				$this->db->where('id_ujian', 1);
 				$this->db->update('hasil_test'); 
 				$out['valid'] = true;
 			} 
@@ -163,11 +181,12 @@ class Welcome extends CI_Controller {
 			$initDate = new DateTime(); 
       		$xx=$initDate->format('Y-m-d H:i:s');
 			$peserta = $this->peserta->get_memberdata(); 
-			$row = out_row('hasil_test', array('id_mhs' => $peserta->id));
+			$row = out_row('hasil_test', array('id_mhs' => $peserta->id,'id_ujian'=>1));
 			if (count($row) > 0) { 
 				$this->db->set('jawaban', $this->input->post('jawaban'));
 				$this->db->set('akhir', $xx);
 				$this->db->where('id_mhs', $peserta->id);
+				$this->db->where('id_ujian', 1);
 				$this->db->update('hasil_test'); 
 				$out['valid'] = true;
 			} 
@@ -179,5 +198,49 @@ class Welcome extends CI_Controller {
 	{
 		$this->konten->cetak_lap_ujian();
 	}
-	
+	public function save_jwb_skala()
+	{
+		$out = array('valid' => false);
+		if(!$this->peserta->is_login()){
+			$out->valid = false;
+		}else{
+			$peserta = $this->peserta->get_memberdata(); 
+			$row = out_row('hasil_test', array('id_mhs' => $peserta->id,'id_ujian'=>2));
+			if (count($row) > 0) { 
+				$this->db->set('jawaban', $this->input->post('jawaban'));
+				$this->db->where('id_mhs', $peserta->id);
+				$this->db->where('id_ujian', 2);
+				$this->db->update('hasil_test'); 
+				$out['valid'] = true;
+			} 
+			$this->konten->koreksi_skala($peserta->id);
+			echo json_encode($out);
+		}
+	}
+	public function save_jwb_last_skala()
+	{
+		$out = array('valid' => false);
+		if(!$this->peserta->is_login()){
+			$out->valid = false;
+		}else{
+			$initDate = new DateTime(); 
+      		$xx=$initDate->format('Y-m-d H:i:s');
+			$peserta = $this->peserta->get_memberdata(); 
+			$row = out_row('hasil_test', array('id_mhs' => $peserta->id,'id_ujian'=>2));
+			if (count($row) > 0) { 
+				$this->db->set('jawaban', $this->input->post('jawaban'));
+				$this->db->set('akhir', $xx);
+				$this->db->where('id_mhs', $peserta->id);
+				$this->db->where('id_ujian', 2);
+				$this->db->update('hasil_test'); 
+				$out['valid'] = true;
+			} 
+			$this->konten->koreksi_skala($peserta->id);
+			echo json_encode($out);
+		}
+	}
+	public function cetak_hasil_skala()
+	{
+		$this->konten->cetak_lap_ujian_skala();
+	}
 }
