@@ -212,7 +212,7 @@ class konten extends CI_Model {
       $ssl .='</div></div></div></div>';
       $initDate = new DateTime(); 
       $xx=$initDate->format('Y-m-d H:i:s');
-      $initDate->add(new DateInterval('PT5400S')); 
+      $initDate->add(new DateInterval('PT1800S')); 
       $yy=$initDate->format('Y-m-d H:i:s');
       $array=array(
         'id_ujian'=>2,
