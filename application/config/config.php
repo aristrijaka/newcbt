@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $servername=filter_input(INPUT_SERVER, 'SERVER_NAME');
 $port=filter_input(INPUT_SERVER, 'SERVER_PORT');
-$config['base_url']	= 'http://'.$servername.":".$port.'/cbttest/'; 
+$config['base_url']	= 'http://'.$servername.":".$port.'/'; 
 date_default_timezone_set('Asia/Jakarta');
 /*
 |--------------------------------------------------------------------------
