@@ -43,10 +43,10 @@ class Welcome extends CI_Controller {
 			$peserta = $this->peserta->get_memberdata();
 			$data = array(
 				'blog_title' => 'My Blog Title',
-				'page_title' => 'Hasil Assement',
+				'page_title' => 'Hasil Assessment',
 				'tpa' => out_field('hasil_test', array('id_mhs' =>$peserta->id,'id_ujian'=>1),'score'),
 				'skala' => out_field('hasil_test', array('id_mhs' =>$peserta->id,'id_ujian'=>2),'score') * (100/80),
-				'menus'=> $this->konten->menu(),
+				'menus'=> $this->konten->menu('hasil'),
 				'base_url' => base_url()
 				);
 			$this->parser->parse('hasil', $data); 
