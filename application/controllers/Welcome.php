@@ -98,7 +98,7 @@ class Welcome extends CI_Controller {
 		$peserta = $this->peserta->get_memberdata(); 
 		$data = array(
 			'page_title' => 'TPA', 
-			'menus'=> $this->konten->menu('scala'),
+			'menus'=> $this->konten->menu('skala'),
 			'soal' => $this->konten->soal_scala($peserta->id),
 			'timer'=> $this->konten->get_time_skala($peserta->id),
 			'petunjuk'=>'',
