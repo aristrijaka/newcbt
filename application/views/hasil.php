@@ -61,7 +61,7 @@
                           <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {tpa}%"> 
                           </div>
                       </div>
-                      <p>Test Skala Kepribadian</p>
+                      <p>Test Skala Kepribadian = {skala} Point</p>
                       <div class="progress">
                           <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: {skala}%"> 
                           </div>
